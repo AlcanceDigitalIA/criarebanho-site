@@ -183,6 +183,33 @@
     footer a:hover { color: #fff; }
     .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 16px; flex-wrap: wrap; }
 
+    /* VER TELA */
+    .modulo-card { cursor: pointer; }
+    .ver-tela { margin-top: 12px; font-size: 0.85rem; font-weight: 600; color: var(--marrom); }
+    .modulo-card:hover .ver-tela { text-decoration: underline; }
+
+    /* LIGHTBOX */
+    #lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85); z-index: 999;
+      align-items: center; justify-content: center;
+    }
+    #lightbox.ativo { display: flex; }
+    .lb-inner {
+      position: relative; display: flex; flex-direction: column;
+      align-items: center; gap: 12px; max-height: 90vh;
+    }
+    .lb-titulo { color: #fff; font-weight: 700; font-size: 1rem; }
+    .lb-fechar {
+      position: absolute; top: -40px; right: 0;
+      background: none; border: none; color: #fff;
+      font-size: 1.5rem; cursor: pointer; line-height: 1;
+    }
+    #lb-img {
+      max-height: 80vh; max-width: 90vw;
+      border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
     /* RESPONSIVO */
     @media (max-width: 640px) {
       .hero-inner { flex-direction: column-reverse; text-align: center; }
@@ -244,47 +271,55 @@
   <div class="section-inner">
     <div class="section-tag">Funcionalidades</div>
     <h2 class="section-title">Tudo que você precisa para gerenciar seu rebanho</h2>
-    <p class="section-sub">Do cadastro do animal até o fechamento financeiro — um app completo, simples de usar.</p>
+    <p class="section-sub">Do cadastro do animal até o fechamento financeiro — um app completo, simples de usar. Clique em qualquer módulo para ver como é na prática.</p>
     <div class="modulos-grid">
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_animais.png','Animais')">
         <div class="modulo-icon" style="background:#FBE9E7;">🐄</div>
         <h3>Animais</h3>
         <p>Cadastre cada animal com brinco, nome, raça, sexo, peso, idade, pai, mãe, lote e situação. Histórico completo do rebanho.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_sanitario.png','Saúde Animal')">
         <div class="modulo-icon" style="background:#E8F5E9;">💉</div>
         <h3>Saúde Animal</h3>
         <p>Registre vacinas, vermifugações, tratamentos e exames. Alertas automáticos por data para nunca perder um evento sanitário.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_reproducao.png','Reprodução')">
         <div class="modulo-icon" style="background:#FCE4EC;">🐂</div>
         <h3>Reprodução</h3>
         <p>Controle coberturas, gestações e partos. Cálculo automático da data prevista de parto (283 dias) com alertas.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_pesagens.png','Pesagens')">
         <div class="modulo-icon" style="background:#E3F2FD;">⚖️</div>
         <h3>Pesagens</h3>
         <p>Acompanhe a evolução de peso de cada animal ao longo do tempo. Veja o ganho de peso acumulado por cabeça.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_pastagens.png','Pastagens')">
         <div class="modulo-icon" style="background:#F1F8E9;">🌿</div>
         <h3>Pastagens</h3>
         <p>Gerencie piquetes com rotação inteligente. Alertas de piquetes vencidos, dias de descanso e disponibilidade.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_financeiro.png','Financeiro')">
         <div class="modulo-icon" style="background:#FFF8E1;">💰</div>
         <h3>Financeiro</h3>
         <p>Receitas, despesas e custo por animal. Feche as contas da fazenda com relatório financeiro em PDF.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_agenda.png','Agenda')">
         <div class="modulo-icon" style="background:#EDE7F6;">📅</div>
         <h3>Agenda</h3>
         <p>Visualize tudo que está por vir: eventos sanitários, partos previstos e piquetes a vencer — em um único lugar.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card" onclick="abrirScreen('img/screen_relatorios.png','Relatórios')">
         <div class="modulo-icon" style="background:#E8EAF6;">📊</div>
         <h3>Relatórios</h3>
         <p>Gere relatórios em PDF do rebanho completo com genealogia e relatório financeiro detalhado para imprimir.</p>
+        <div class="ver-tela">Ver tela →</div>
       </div>
       <div class="modulo-card">
         <div class="modulo-icon" style="background:#FFF3E0;">☁️</div>
@@ -294,6 +329,15 @@
     </div>
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="fecharScreen()">
+  <div class="lb-inner" onclick="event.stopPropagation()">
+    <button class="lb-fechar" onclick="fecharScreen()">✕</button>
+    <p class="lb-titulo" id="lb-titulo"></p>
+    <img id="lb-img" src="" alt="">
+  </div>
+</div>
 
 <!-- OFFLINE -->
 <section class="offline">
@@ -383,5 +427,18 @@
   <p>© 2026 Cria Rebanho Pro. Desenvolvido com ❤️ para o pecuarista brasileiro.</p>
 </footer>
 
+<script>
+  function abrirScreen(src, titulo) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb-titulo').textContent = titulo;
+    document.getElementById('lightbox').classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharScreen() {
+    document.getElementById('lightbox').classList.remove('ativo');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharScreen(); });
+</script>
 </body>
 </html>
