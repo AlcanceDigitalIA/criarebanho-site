@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cria Rebanho Pro — Gestão de Pecuária no Celular</title>
+  <meta name="description" content="Aplicativo de gestão de rebanho bovino para pequenas e médias propriedades rurais. Controle de animais, sanitário, reprodução, pesagens, pastagens e financeiro.">
+  <link rel="icon" type="image/png" href="img/icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --marrom: #5D4037;
+      --marrom-escuro: #3E2723;
+      --marrom-claro: #8D6E63;
+      --verde: #2E7D32;
+      --laranja: #E65100;
+      --bg: #FAFAF8;
+      --texto: #1a1a1a;
+      --cinza: #666;
+    }
+
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--texto); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px); border-bottom: 1px solid #eee;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 5%; z-index: 100;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+    .nav-logo span { font-weight: 700; font-size: 1.1rem; color: var(--marrom-escuro); }
+    .nav-btn {
+      background: var(--marrom); color: #fff; padding: 10px 20px;
+      border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: var(--marrom-escuro); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: linear-gradient(135deg, var(--marrom-escuro) 0%, var(--marrom) 60%, #8D6E63 100%);
+      padding: 100px 5% 60px;
+    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
+    .hero-text { flex: 1; min-width: 300px; }
+    .hero-badge {
+      display: inline-block; background: rgba(255,255,255,0.15); color: #fff;
+      padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+      margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.25);
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 20px; }
+    .hero h1 span { color: #FFCC80; }
+    .hero p { font-size: 1.15rem; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 36px; max-width: 520px; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: flex; align-items: center; gap: 10px;
+      background: #fff; color: var(--marrom-escuro);
+      padding: 14px 28px; border-radius: 12px; text-decoration: none;
+      font-weight: 700; font-size: 1rem; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .btn-secondary {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.15); color: #fff;
+      padding: 14px 28px; border-radius: 12px; text-decoration: none;
+      font-weight: 600; font-size: 1rem; border: 1px solid rgba(255,255,255,0.3);
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+    .hero-image { flex: 1; min-width: 260px; display: flex; justify-content: center; }
+    .hero-icon {
+      width: 220px; height: 220px; border-radius: 48px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    .hero-stats { display: flex; gap: 32px; margin-top: 40px; flex-wrap: wrap; }
+    .stat { color: #fff; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: #FFCC80; }
+    .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.75); }
+
+    /* SEÇÕES */
+    section { padding: 80px 5%; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--marrom); margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--marrom-escuro); margin-bottom: 16px; }
+    .section-sub { font-size: 1.05rem; color: var(--cinza); max-width: 560px; line-height: 1.7; }
+
+    /* MÓDULOS */
+    .modulos { background: #fff; }
+    .modulos-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 48px;
+    }
+    .modulo-card {
+      background: var(--bg); border-radius: 16px; padding: 28px;
+      border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .modulo-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .modulo-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 16px;
+    }
+    .modulo-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--marrom-escuro); margin-bottom: 8px; }
+    .modulo-card p { font-size: 0.92rem; color: var(--cinza); line-height: 1.6; }
+
+    /* FUNCIONA OFFLINE */
+    .offline { background: linear-gradient(135deg, #F1F8E9, #E8F5E9); }
+    .offline-inner { display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
+    .offline-text { flex: 1; min-width: 280px; }
+    .offline-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .offline-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.97rem; color: #333; line-height: 1.5; }
+    .check { color: var(--verde); font-size: 1.1rem; margin-top: 1px; }
+    .offline-visual { flex: 1; min-width: 260px; display: flex; justify-content: center; }
+    .offline-box {
+      background: #fff; border-radius: 20px; padding: 32px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1); text-align: center; max-width: 300px;
+    }
+    .offline-box .icon-big { font-size: 4rem; margin-bottom: 16px; }
+    .offline-box h4 { font-size: 1.1rem; font-weight: 700; color: var(--marrom-escuro); margin-bottom: 8px; }
+    .offline-box p { font-size: 0.9rem; color: var(--cinza); line-height: 1.6; }
+
+    /* PLANOS */
+    .planos { background: #fff; }
+    .planos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin-top: 48px; }
+    .plano-card {
+      border-radius: 20px; padding: 36px 32px; border: 2px solid #eee;
+      transition: transform 0.2s;
+    }
+    .plano-card:hover { transform: translateY(-4px); }
+    .plano-card.destaque { border-color: var(--marrom); background: var(--marrom-escuro); color: #fff; }
+    .plano-badge {
+      display: inline-block; background: #FFCC80; color: var(--marrom-escuro);
+      padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .plano-nome { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+    .plano-card.destaque .plano-nome { color: #fff; }
+    .plano-preco { font-size: 2.4rem; font-weight: 800; color: var(--marrom); margin-bottom: 4px; }
+    .plano-card.destaque .plano-preco { color: #FFCC80; }
+    .plano-periodo { font-size: 0.85rem; color: var(--cinza); margin-bottom: 28px; }
+    .plano-card.destaque .plano-periodo { color: rgba(255,255,255,0.65); }
+    .plano-lista { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .plano-lista li { display: flex; align-items: center; gap: 10px; font-size: 0.92rem; }
+    .plano-card.destaque .plano-lista li { color: rgba(255,255,255,0.9); }
+    .plano-lista .ok { color: var(--verde); }
+    .plano-card.destaque .plano-lista .ok { color: #A5D6A7; }
+    .plano-lista .no { color: #ccc; }
+    .plano-btn {
+      display: block; text-align: center; margin-top: 32px;
+      padding: 14px; border-radius: 10px; text-decoration: none;
+      font-weight: 700; font-size: 0.95rem; transition: opacity 0.2s;
+    }
+    .plano-btn:hover { opacity: 0.85; }
+    .plano-btn.outline { border: 2px solid var(--marrom); color: var(--marrom); }
+    .plano-btn.filled { background: #FFCC80; color: var(--marrom-escuro); }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, var(--marrom-escuro), var(--marrom));
+      text-align: center; padding: 80px 5%;
+    }
+    .cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: #fff; margin-bottom: 16px; }
+    .cta p { font-size: 1.1rem; color: rgba(255,255,255,0.8); margin-bottom: 36px; }
+    .cta .btn-primary { display: inline-flex; }
+
+    /* FOOTER */
+    footer {
+      background: var(--marrom-escuro); color: rgba(255,255,255,0.6);
+      text-align: center; padding: 32px 5%; font-size: 0.87rem;
+    }
+    footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 16px; flex-wrap: wrap; }
+
+    /* RESPONSIVO */
+    @media (max-width: 640px) {
+      .hero-inner { flex-direction: column-reverse; text-align: center; }
+      .hero p { margin: 0 auto 36px; }
+      .hero-buttons { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .offline-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="img/icon.png" alt="Cria Rebanho Pro">
+    <span>Cria Rebanho Pro</span>
+  </a>
+  <a href="#download" class="nav-btn">Baixar grátis</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">🐄 Aplicativo para pecuaristas</div>
+      <h1>Gerencie seu <span>rebanho</span> no celular, em qualquer lugar</h1>
+      <p>Controle completo de animais, saúde, reprodução, pastagens e financeiro. Funciona sem internet — seus dados sempre ao alcance da mão.</p>
+      <div class="hero-buttons">
+        <a href="#download" class="btn-primary">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.98.2l13.08-7.55-2.82-2.82-11.24 10.17zm-1.8-20.3C1.14 3.8 1 4.19 1 4.64v14.72c0 .45.14.84.38 1.18l.06.06 8.25-8.25v-.19L1.44 3.9l-.06.06zm18.34 9.46l-2.52-1.46-2.89 2.89 2.89 2.89 2.54-1.47c.72-.42.72-1.43-.02-1.85zM4.16.24L17.24 7.8l-2.82 2.82L3.18.44A1.2 1.2 0 0 1 4.16.24z"/></svg>
+          Baixar na Play Store
+        </a>
+        <a href="#modulos" class="btn-secondary">Ver funcionalidades</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">9</div>
+          <div class="stat-label">Módulos completos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Funciona offline</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Grátis</div>
+          <div class="stat-label">Para começar</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="img/icon.png" alt="Cria Rebanho Pro" class="hero-icon">
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section class="modulos" id="modulos">
+  <div class="section-inner">
+    <div class="section-tag">Funcionalidades</div>
+    <h2 class="section-title">Tudo que você precisa para gerenciar seu rebanho</h2>
+    <p class="section-sub">Do cadastro do animal até o fechamento financeiro — um app completo, simples de usar.</p>
+    <div class="modulos-grid">
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#FBE9E7;">🐄</div>
+        <h3>Animais</h3>
+        <p>Cadastre cada animal com brinco, nome, raça, sexo, peso, idade, pai, mãe, lote e situação. Histórico completo do rebanho.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#E8F5E9;">💉</div>
+        <h3>Saúde Animal</h3>
+        <p>Registre vacinas, vermifugações, tratamentos e exames. Alertas automáticos por data para nunca perder um evento sanitário.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#FCE4EC;">🐂</div>
+        <h3>Reprodução</h3>
+        <p>Controle coberturas, gestações e partos. Cálculo automático da data prevista de parto (283 dias) com alertas.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#E3F2FD;">⚖️</div>
+        <h3>Pesagens</h3>
+        <p>Acompanhe a evolução de peso de cada animal ao longo do tempo. Veja o ganho de peso acumulado por cabeça.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#F1F8E9;">🌿</div>
+        <h3>Pastagens</h3>
+        <p>Gerencie piquetes com rotação inteligente. Alertas de piquetes vencidos, dias de descanso e disponibilidade.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#FFF8E1;">💰</div>
+        <h3>Financeiro</h3>
+        <p>Receitas, despesas e custo por animal. Feche as contas da fazenda com relatório financeiro em PDF.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#EDE7F6;">📅</div>
+        <h3>Agenda</h3>
+        <p>Visualize tudo que está por vir: eventos sanitários, partos previstos e piquetes a vencer — em um único lugar.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#E8EAF6;">📊</div>
+        <h3>Relatórios</h3>
+        <p>Gere relatórios em PDF do rebanho completo com genealogia e relatório financeiro detalhado para imprimir.</p>
+      </div>
+      <div class="modulo-card">
+        <div class="modulo-icon" style="background:#FFF3E0;">☁️</div>
+        <h3>Sincronização</h3>
+        <p>Seus dados ficam salvos no celular e sincronizam automaticamente com a nuvem quando há conexão.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFLINE -->
+<section class="offline">
+  <div class="section-inner offline-inner">
+    <div class="offline-text">
+      <div class="section-tag">Offline First</div>
+      <h2 class="section-title">Funciona no meio do pasto, sem internet</h2>
+      <p class="section-sub">Desenvolvido para a realidade do campo. Todos os dados ficam no seu celular e sincronizam quando você tiver sinal.</p>
+      <ul class="offline-list">
+        <li><span class="check">✓</span> Registre pesagens, vacinas e partos sem precisar de Wi-Fi</li>
+        <li><span class="check">✓</span> Dados salvos com segurança no próprio celular</li>
+        <li><span class="check">✓</span> Sincronização automática com a nuvem quando conectado</li>
+        <li><span class="check">✓</span> Seus dados acessíveis em qualquer lugar da propriedade</li>
+        <li><span class="check">✓</span> Backup na nuvem para não perder nada</li>
+      </ul>
+    </div>
+    <div class="offline-visual">
+      <div class="offline-box">
+        <div class="icon-big">📶</div>
+        <h4>Sem internet? Sem problema.</h4>
+        <p>O Cria Rebanho Pro funciona completamente offline. Trabalhe no campo e sincronize depois.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section class="planos" id="planos">
+  <div class="section-inner">
+    <div class="section-tag">Planos</div>
+    <h2 class="section-title">Comece grátis, cresça com o Premium</h2>
+    <p class="section-sub">Experimente sem custo. Quando seu rebanho crescer, o Premium cresce com você.</p>
+    <div class="planos-grid">
+      <div class="plano-card">
+        <div class="plano-nome">Gratuito</div>
+        <div class="plano-preco">R$ 0</div>
+        <div class="plano-periodo">para sempre</div>
+        <ul class="plano-lista">
+          <li><span class="ok">✓</span> Até 5 animais ativos</li>
+          <li><span class="ok">✓</span> 1 piquete</li>
+          <li><span class="ok">✓</span> Módulo sanitário</li>
+          <li><span class="ok">✓</span> Módulo de pesagens</li>
+          <li><span class="ok">✓</span> Agenda</li>
+          <li><span class="no">✗</span> Financeiro</li>
+          <li><span class="no">✗</span> Reprodução</li>
+          <li><span class="no">✗</span> Relatórios PDF</li>
+        </ul>
+        <a href="#download" class="plano-btn outline">Baixar grátis</a>
+      </div>
+      <div class="plano-card destaque">
+        <div class="plano-badge">⭐ Mais popular</div>
+        <div class="plano-nome">Premium</div>
+        <div class="plano-preco">Sob consulta</div>
+        <div class="plano-periodo">ativação por código</div>
+        <ul class="plano-lista">
+          <li><span class="ok">✓</span> Animais ilimitados</li>
+          <li><span class="ok">✓</span> Piquetes ilimitados</li>
+          <li><span class="ok">✓</span> Módulo financeiro completo</li>
+          <li><span class="ok">✓</span> Módulo de reprodução</li>
+          <li><span class="ok">✓</span> Relatórios PDF</li>
+          <li><span class="ok">✓</span> Custo por animal</li>
+          <li><span class="ok">✓</span> Sincronização na nuvem</li>
+          <li><span class="ok">✓</span> Suporte prioritário</li>
+        </ul>
+        <a href="mailto:contato@criarebanho.app.br" class="plano-btn filled">Falar sobre o Premium</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="download">
+  <h2>Comece a organizar seu rebanho hoje</h2>
+  <p>Gratuito para baixar. Sem cartão de crédito. Funciona offline.</p>
+  <a href="#" class="btn-primary" style="margin: 0 auto;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.98.2l13.08-7.55-2.82-2.82-11.24 10.17zm-1.8-20.3C1.14 3.8 1 4.19 1 4.64v14.72c0 .45.14.84.38 1.18l.06.06 8.25-8.25v-.19L1.44 3.9l-.06.06zm18.34 9.46l-2.52-1.46-2.89 2.89 2.89 2.89 2.54-1.47c.72-.42.72-1.43-.02-1.85zM4.16.24L17.24 7.8l-2.82 2.82L3.18.44A1.2 1.2 0 0 1 4.16.24z"/></svg>
+    Baixar na Play Store
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="privacidade.html">Política de Privacidade</a>
+    <a href="mailto:contato@criarebanho.app.br">contato@criarebanho.app.br</a>
+  </div>
+  <p>© 2026 Cria Rebanho Pro. Desenvolvido com ❤️ para o pecuarista brasileiro.</p>
+</footer>
+
+</body>
+</html>
