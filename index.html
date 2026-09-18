@@ -4,9 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cria Rebanho Pro — Gestão de Pecuária no Celular</title>
-  <meta name="description" content="Aplicativo de gestão de rebanho bovino para pequenas e médias propriedades rurais. Controle de animais, sanitário, reprodução, pesagens, pastagens, financeiro, arrendamento e compra/venda de animais.">
+  <meta name="description" content="Aplicativo de gestão de rebanho bovino com dois módulos: Recria (controle individual por animal) e Corte (gestão por lote). Sanitário, reprodução, pesagens, pastagens, financeiro, arrendamento e compra/venda. Funciona offline.">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph (WhatsApp, Facebook, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://criarebanho.app.br/">
+  <meta property="og:title" content="Cria Rebanho Pro — Gestão de Pecuária no Celular">
+  <meta property="og:description" content="Controle seu rebanho de qualquer lugar, mesmo sem internet. Módulo Recria (por animal) e módulo Corte (por lote): saúde, reprodução, pesagens, pastagens, financeiro e muito mais.">
+  <meta property="og:image" content="https://criarebanho.app.br/img/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cria Rebanho Pro — Gestão de Pecuária no Celular">
+  <meta name="twitter:description" content="Controle seu rebanho de qualquer lugar, mesmo sem internet.">
+  <meta name="twitter:image" content="https://criarebanho.app.br/img/icon.png">
+
   <link rel="icon" type="image/png" href="img/icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -35,12 +47,19 @@
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
     .nav-logo span { font-weight: 700; font-size: 1.1rem; color: var(--marrom-escuro); }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a {
+      text-decoration: none; font-size: 0.92rem; font-weight: 600;
+      color: var(--marrom-claro); transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--marrom-escuro); }
     .nav-btn {
       background: var(--marrom); color: #fff; padding: 10px 20px;
       border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;
       transition: background 0.2s;
     }
     .nav-btn:hover { background: var(--marrom-escuro); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
 
     /* HERO */
     .hero {
@@ -159,13 +178,37 @@
     .plano-card.destaque .plano-lista .ok { color: #A5D6A7; }
     .plano-lista .no { color: #ccc; }
     .plano-btn {
-      display: block; text-align: center; margin-top: 32px;
+      display: block; text-align: center; margin-top: 16px;
       padding: 14px; border-radius: 10px; text-decoration: none;
       font-weight: 700; font-size: 0.95rem; transition: opacity 0.2s;
     }
     .plano-btn:hover { opacity: 0.85; }
-    .plano-btn.outline { border: 2px solid var(--marrom); color: var(--marrom); }
+    .plano-btn.outline { border: 2px solid var(--marrom); color: var(--marrom); margin-top: 32px; }
     .plano-btn.filled { background: #FFCC80; color: var(--marrom-escuro); }
+    .plano-btn.wpp {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: #25D366; color: #fff; margin-top: 32px;
+    }
+
+    /* FAQ */
+    .faq { background: var(--bg); }
+    .faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 16px; max-width: 760px; }
+    .faq-item {
+      background: #fff; border-radius: 14px; border: 1px solid #eee;
+      overflow: hidden;
+    }
+    .faq-pergunta {
+      width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+      padding: 20px 24px; font-size: 1rem; font-weight: 600; color: var(--marrom-escuro);
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .faq-pergunta:hover { background: #faf8f6; }
+    .faq-seta { font-size: 1.2rem; transition: transform 0.25s; color: var(--marrom-claro); flex-shrink: 0; }
+    .faq-item.aberto .faq-seta { transform: rotate(180deg); }
+    .faq-resposta { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-item.aberto .faq-resposta { max-height: 300px; }
+    .faq-resposta p { padding: 0 24px 20px; font-size: 0.95rem; color: var(--cinza); line-height: 1.7; }
 
     /* CTA */
     .cta {
@@ -212,9 +255,7 @@
       border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
       transition: opacity 0.2s;
     }
-    .lb-nav {
-      display: flex; align-items: center; gap: 20px; margin-top: 4px;
-    }
+    .lb-nav { display: flex; align-items: center; gap: 20px; margin-top: 4px; }
     .lb-btn {
       background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
       color: #fff; width: 40px; height: 40px; border-radius: 50%;
@@ -248,27 +289,32 @@
     <img src="img/icon.png" alt="Cria Rebanho Pro">
     <span>Cria Rebanho Pro</span>
   </a>
-  <a href="#download" class="nav-btn">Baixar grátis</a>
+  <div class="nav-links">
+    <a href="#modulos">Funcionalidades</a>
+    <a href="#planos">Planos</a>
+    <a href="#faq">Dúvidas</a>
+  </div>
+  <a href="#download" class="nav-btn">Testar grátis</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-badge">🐄 Aplicativo para pecuaristas</div>
+      <div class="hero-badge">🐄 Novo: Módulo Corte — gestão por lote</div>
       <h1>Gerencie seu <span>rebanho</span> no celular, em qualquer lugar</h1>
-      <p>Controle completo de animais, saúde, reprodução, pastagens e financeiro. Funciona sem internet — seus dados sempre ao alcance da mão.</p>
+      <p>Dois módulos em um só app: <strong>Recria</strong>, com controle individual por animal, e <strong>Corte</strong>, com gestão por lote para quem trabalha com muitas cabeças. Funciona sem internet — seus dados sempre ao alcance da mão.</p>
       <div class="hero-buttons">
         <a href="#download" class="btn-primary">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.98.2l13.08-7.55-2.82-2.82-11.24 10.17zm-1.8-20.3C1.14 3.8 1 4.19 1 4.64v14.72c0 .45.14.84.38 1.18l.06.06 8.25-8.25v-.19L1.44 3.9l-.06.06zm18.34 9.46l-2.52-1.46-2.89 2.89 2.89 2.89 2.54-1.47c.72-.42.72-1.43-.02-1.85zM4.16.24L17.24 7.8l-2.82 2.82L3.18.44A1.2 1.2 0 0 1 4.16.24z"/></svg>
-          Baixar na Play Store
+          Testar grátis agora
         </a>
         <a href="#modulos" class="btn-secondary">Ver funcionalidades</a>
       </div>
       <div class="hero-stats">
         <div class="stat">
-          <div class="stat-num">11</div>
-          <div class="stat-label">Módulos completos</div>
+          <div class="stat-num">2</div>
+          <div class="stat-label">Módulos: Recria e Corte</div>
         </div>
         <div class="stat">
           <div class="stat-num">100%</div>
@@ -286,10 +332,34 @@
   </div>
 </section>
 
+<!-- DOIS MÓDULOS -->
+<section class="dois-modulos" id="dois-modulos" style="background: var(--bg);">
+  <div class="section-inner">
+    <div class="section-tag">Dois módulos, um só app</div>
+    <h2 class="section-title">Escolha como gerenciar: por animal ou por lote</h2>
+    <p class="section-sub">Ao abrir o app, você escolhe o módulo que combina com o seu manejo. Pode usar os dois ao mesmo tempo — e o Premium libera tudo com uma única assinatura.</p>
+    <div class="modulos-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+      <div class="modulo-card" style="border: 2px solid var(--marrom); background:#fff;" onclick="document.getElementById('modulos').scrollIntoView({behavior:'smooth'})">
+        <div class="modulo-icon" style="background:#FBE9E7; font-size:2rem; width:64px; height:64px;">🐄</div>
+        <h3 style="font-size:1.3rem;">Recria</h3>
+        <p style="margin-bottom:12px;"><strong>Controle individual por animal.</strong> Ideal para cria, recria e seleção genética.</p>
+        <p>Cadastro com brinco e genealogia, saúde animal, reprodução com previsão de parto, pesagens por cabeça, pastagens, financeiro, agenda e relatórios PDF.</p>
+        <div class="ver-tela">Ver funcionalidades ↓</div>
+      </div>
+      <div class="modulo-card" style="border: 2px solid var(--laranja); background:#fff; cursor:default;">
+        <div class="modulo-icon" style="background:#FFF3E0; font-size:2rem; width:64px; height:64px;">🥩</div>
+        <h3 style="font-size:1.3rem;">Corte <span style="font-size:0.72rem;background:#E65100;color:#fff;padding:2px 8px;border-radius:10px;font-weight:700;vertical-align:middle;">Novo</span></h3>
+        <p style="margin-bottom:12px;"><strong>Gestão por lote.</strong> Feito para quem trabalha com muitas cabeças de gado de corte.</p>
+        <p>Lotes com quantidade e peso médio, manejo sanitário por lote, pesagens de lote, movimentações (venda, transferência, morte), piquetes, arrendamento de pastagens, financeiro e relatórios.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- MÓDULOS -->
 <section class="modulos" id="modulos">
   <div class="section-inner">
-    <div class="section-tag">Funcionalidades</div>
+    <div class="section-tag">Funcionalidades — Módulo Recria</div>
     <h2 class="section-title">Tudo que você precisa para gerenciar seu rebanho</h2>
     <p class="section-sub">Do cadastro do animal até o fechamento financeiro e controle de arrendamentos — um app completo, simples de usar. Clique em qualquer módulo para ver como é na prática.</p>
     <div class="modulos-grid">
@@ -337,8 +407,8 @@
       </div>
       <div class="modulo-card" onclick="abrirScreens(['img/screen_relatorios.png','img/screen_relatorios2.png'],'Relatórios')">
         <div class="modulo-icon" style="background:#E8EAF6;">📊</div>
-        <h3>Relatórios</h3>
-        <p>Gere relatórios em PDF do rebanho completo com genealogia e relatório financeiro detalhado para imprimir.</p>
+        <h3>Relatórios PDF</h3>
+        <p>Gere relatórios em PDF do rebanho completo, pesagens e pastagens. Ideal para compartilhar com técnicos e veterinários.</p>
         <div class="ver-tela">Ver tela →</div>
       </div>
       <div class="modulo-card">
@@ -373,6 +443,37 @@
     </div>
   </div>
 </div>
+
+<!-- NOVIDADES -->
+<section class="novidades" style="background:#fff; padding-top: 60px; padding-bottom: 60px;">
+  <div class="section-inner">
+    <div class="section-tag">Novidades da versão 1.0.7</div>
+    <h2 class="section-title">Ferramentas que colocam dinheiro no seu bolso</h2>
+    <p class="section-sub">As últimas atualizações trouxeram os números que todo pecuarista de corte quer ver.</p>
+    <div class="modulos-grid" style="margin-top: 36px;">
+      <div class="modulo-card" style="cursor:default;">
+        <div class="modulo-icon" style="background:#E8F5E9;">📈</div>
+        <h3>GMD — Ganho Médio Diário</h3>
+        <p>Veja quantos quilos por dia cada lote está ganhando desde a entrada. Saiba na hora se o pasto e o manejo estão rendendo.</p>
+      </div>
+      <div class="modulo-card" style="cursor:default;">
+        <div class="modulo-icon" style="background:#FFF8E1;">💵</div>
+        <h3>Valor do lote pela arroba</h3>
+        <p>Informe o preço da @ e o app calcula quanto vale seu lote hoje. Decida a hora certa de vender com o número na tela.</p>
+      </div>
+      <div class="modulo-card" style="cursor:default;">
+        <div class="modulo-icon" style="background:#E3F2FD;">📤</div>
+        <h3>Exportação em CSV</h3>
+        <p>Seus dados são seus: exporte tudo em planilhas para abrir no Excel, enviar ao contador ou guardar como backup.</p>
+      </div>
+      <div class="modulo-card" style="cursor:default;">
+        <div class="modulo-icon" style="background:#FBE9E7;">⚡</div>
+        <h3>Cadastro em massa</h3>
+        <p>Chegou gado novo? Cadastre centenas de animais de uma vez com brincos em sequência. Minutos, não horas.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- OFFLINE -->
 <section class="offline">
@@ -411,37 +512,116 @@
         <div class="plano-preco">R$ 0</div>
         <div class="plano-periodo">para sempre</div>
         <ul class="plano-lista">
-          <li><span class="ok">✓</span> Até 5 animais ativos</li>
-          <li><span class="ok">✓</span> 1 piquete</li>
+          <li><span class="ok">✓</span> Até 20 animais ativos</li>
+          <li><span class="ok">✓</span> Até 3 piquetes</li>
           <li><span class="ok">✓</span> Módulo sanitário</li>
           <li><span class="ok">✓</span> Módulo de pesagens</li>
           <li><span class="ok">✓</span> Agenda</li>
+          <li><span class="ok">✓</span> Relatórios PDF</li>
+          <li><span class="ok">✓</span> Sincronização na nuvem</li>
           <li><span class="no">✗</span> Financeiro</li>
           <li><span class="no">✗</span> Reprodução</li>
           <li><span class="no">✗</span> Arrendamento</li>
           <li><span class="no">✗</span> Compra e Venda</li>
-          <li><span class="no">✗</span> Relatórios PDF</li>
         </ul>
-        <a href="#download" class="plano-btn outline">Baixar grátis</a>
+        <a href="#download" class="plano-btn outline">Testar grátis</a>
       </div>
       <div class="plano-card destaque">
         <div class="plano-badge">⭐ Mais popular</div>
         <div class="plano-nome">Premium</div>
-        <div class="plano-preco">Sob consulta</div>
-        <div class="plano-periodo">ativação por código</div>
+        <div class="plano-preco">R$ 30<span style="font-size:1rem;font-weight:600;">/mês</span></div>
+        <div class="plano-periodo">
+          ou <strong style="color:#FFCC80;">R$ 300/ano</strong> — economize 2 meses<br>
+          ativação por código, cancele quando quiser
+        </div>
+        <div style="background:rgba(255,204,128,0.15); border:1px solid rgba(255,204,128,0.4); border-radius:10px; padding:10px 14px; margin-bottom:24px; font-size:0.88rem; color:#FFCC80; font-weight:600;">
+          🎁 Experimente grátis por 15 dias — peça seu código de teste no WhatsApp
+        </div>
         <ul class="plano-lista">
-          <li><span class="ok">✓</span> Animais ilimitados</li>
+          <li><span class="ok">✓</span> <strong>Módulos Recria + Corte completos</strong></li>
+          <li><span class="ok">✓</span> Animais e lotes ilimitados</li>
           <li><span class="ok">✓</span> Piquetes ilimitados</li>
           <li><span class="ok">✓</span> Módulo financeiro completo</li>
           <li><span class="ok">✓</span> Módulo de reprodução</li>
-          <li><span class="ok">✓</span> Arrendamento de terra</li>
+          <li><span class="ok">✓</span> Arrendamento de terra e pastagens</li>
           <li><span class="ok">✓</span> Compra e venda de animais</li>
           <li><span class="ok">✓</span> Relatórios PDF</li>
-          <li><span class="ok">✓</span> Custo por animal</li>
+          <li><span class="ok">✓</span> Custo por animal e por lote</li>
           <li><span class="ok">✓</span> Sincronização na nuvem</li>
           <li><span class="ok">✓</span> Suporte prioritário</li>
+          <li><span class="ok">✓</span> Novos módulos incluídos no futuro</li>
         </ul>
-        <a href="mailto:contato@criarebanho.app.br" class="plano-btn filled">Falar sobre o Premium</a>
+        <a href="https://wa.me/5569999224713?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20Cria%20Rebanho%20Pro%20Premium!" class="plano-btn wpp" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar pelo WhatsApp
+        </a>
+        <a href="mailto:contato@criarebanho.app.br" class="plano-btn filled">Enviar e-mail</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-inner">
+    <div class="section-tag">Dúvidas frequentes</div>
+    <h2 class="section-title">Perguntas frequentes</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-pergunta" onclick="toggleFaq(this)">
+          Qual a diferença entre os módulos Recria e Corte? <span class="faq-seta">▼</span>
+        </button>
+        <div class="faq-resposta">
+          <p>O módulo <strong>Recria</strong> faz o controle individual de cada animal — brinco, genealogia, reprodução, saúde e pesagens por cabeça. Já o módulo <strong>Corte</strong> trabalha por lote: você cadastra um lote com a quantidade de cabeças, peso médio, raça e categoria, e gerencia manejo sanitário, pesagens e movimentações do lote inteiro de uma vez. É ideal para quem engorda muitas cabeças e não precisa acompanhar animal por animal. Você pode usar os dois módulos ao mesmo tempo, e o plano Premium libera ambos.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pergunta" onclick="toggleFaq(this)">
+          O app funciona sem internet? <span class="faq-seta">▼</span>
+        </button>
+        <div class="faq-resposta">
+          <p>Sim! O Cria Rebanho Pro é desenvolvido com a filosofia "offline first". Todos os dados ficam armazenados no próprio celular e sincronizam automaticamente com a nuvem quando há conexão disponível. Você pode usar o app normalmente no meio do campo, sem depender de sinal.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pergunta" onclick="toggleFaq(this)">
+          Se eu trocar de celular, perco meus dados? <span class="faq-seta">▼</span>
+        </button>
+        <div class="faq-resposta">
+          <p>Não. Ao fazer login com sua conta no novo celular, todos os seus dados são restaurados automaticamente da nuvem. Seu rebanho fica seguro independente do dispositivo.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pergunta" onclick="toggleFaq(this)">
+          Quantos animais posso cadastrar no plano gratuito? <span class="faq-seta">▼</span>
+        </button>
+        <div class="faq-resposta">
+          <p>No plano gratuito você pode cadastrar até 20 animais ativos e gerenciar até 3 piquetes. Para rebanhos maiores, o plano Premium oferece animais e piquetes ilimitados, além de módulos exclusivos como financeiro, reprodução e arrendamento.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pergunta" onclick="toggleFaq(this)">
+          Como funciona a ativação do Premium? <span class="faq-seta">▼</span>
+        </button>
+        <div class="faq-resposta">
+          <p>Após o pagamento (R$ 30/mês ou R$ 300/ano com 2 meses de desconto), você recebe um código de ativação por WhatsApp ou e-mail. Basta inserir esse código dentro do app, na tela "Meu Plano", e o acesso Premium é liberado imediatamente. E antes de assinar, você pode pedir um código de teste grátis de 15 dias pelo WhatsApp — sem compromisso.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pergunta" onclick="toggleFaq(this)">
+          O app está disponível para iPhone? <span class="faq-seta">▼</span>
+        </button>
+        <div class="faq-resposta">
+          <p>Atualmente o Cria Rebanho Pro está disponível apenas para Android (Play Store). A versão para iOS (iPhone) está em planejamento para uma próxima atualização.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pergunta" onclick="toggleFaq(this)">
+          Meus dados ficam seguros? <span class="faq-seta">▼</span>
+        </button>
+        <div class="faq-resposta">
+          <p>Sim. Cada usuário acessa apenas seus próprios dados — outros usuários não têm acesso às suas informações. A sincronização com a nuvem utiliza autenticação segura e criptografia. Consulte nossa Política de Privacidade para mais detalhes.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -450,10 +630,10 @@
 <!-- CTA -->
 <section class="cta" id="download">
   <h2>Comece a organizar seu rebanho hoje</h2>
-  <p>Gratuito para baixar. Sem cartão de crédito. Funciona offline.</p>
-  <a href="#" class="btn-primary" style="margin: 0 auto;">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.98.2l13.08-7.55-2.82-2.82-11.24 10.17zm-1.8-20.3C1.14 3.8 1 4.19 1 4.64v14.72c0 .45.14.84.38 1.18l.06.06 8.25-8.25v-.19L1.44 3.9l-.06.06zm18.34 9.46l-2.52-1.46-2.89 2.89 2.89 2.89 2.54-1.47c.72-.42.72-1.43-.02-1.85zM4.16.24L17.24 7.8l-2.82 2.82L3.18.44A1.2 1.2 0 0 1 4.16.24z"/></svg>
-    Baixar na Play Store
+  <p>O app está em fase final de testes na Play Store. Entre para a lista de testadores e use grátis antes de todo mundo!</p>
+  <a href="https://wa.me/5569999224713?text=Ol%C3%A1%2C%20quero%20ser%20testador%20do%20Cria%20Rebanho%20Pro!" target="_blank" rel="noopener" class="btn-primary" style="margin: 0 auto; background:#25D366; color:#fff;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Quero testar grátis
   </a>
 </section>
 
@@ -462,6 +642,7 @@
   <div class="footer-links">
     <a href="privacidade.html">Política de Privacidade</a>
     <a href="mailto:contato@criarebanho.app.br">contato@criarebanho.app.br</a>
+    <a href="https://wa.me/5569999224713" target="_blank" rel="noopener">WhatsApp</a>
   </div>
   <p>© 2026 Cria Rebanho Pro. Desenvolvido com ❤️ para o pecuarista brasileiro.</p>
 </footer>
@@ -506,6 +687,13 @@
   function fecharScreen() {
     document.getElementById('lightbox').classList.remove('ativo');
     document.body.style.overflow = '';
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const aberto = item.classList.contains('aberto');
+    document.querySelectorAll('.faq-item.aberto').forEach(el => el.classList.remove('aberto'));
+    if (!aberto) item.classList.add('aberto');
   }
 
   document.addEventListener('keydown', e => {

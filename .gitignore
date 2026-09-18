@@ -1,0 +1,12 @@
+# Página padrão gerada pela Hostinger — não faz parte do site
+default.php
+
+# Arquivos de sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Backups e temporários
+*.bak
+*.tmp
+*~

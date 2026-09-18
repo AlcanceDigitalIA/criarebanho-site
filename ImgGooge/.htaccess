@@ -1,0 +1,49 @@
+# Desativar listagem de diretórios
+Options -Indexes
+
+# Bloquear acesso à pasta includes
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Forçar HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirecionar www para não-www
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+    # Bloquear acesso direto à pasta includes
+    RewriteRule ^includes/ - [F,L]
+
+    # Remover extensão .php da URL
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.+)$ $1.php [L]
+</IfModule>
+
+# Bloquear acesso a arquivos sensíveis
+<FilesMatch "\.(env|log|sql|sh|bak|git)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Charset e tipos MIME
+AddDefaultCharset UTF-8
+AddType application/x-httpd-php .php
+
+# Cache para assets estáticos
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# Desativar assinatura do servidor
+ServerSignature Off

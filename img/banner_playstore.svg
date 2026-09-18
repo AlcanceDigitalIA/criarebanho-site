@@ -1,0 +1,36 @@
+<svg width="1024" height="500" viewBox="0 0 1024 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="500" fill="#3E2723"/>
+  <rect x="0" y="0" width="1024" height="500" fill="#5D4037" opacity="0.6"/>
+  <circle cx="820" cy="80" r="180" fill="#4E342E" opacity="0.5"/>
+  <circle cx="900" cy="400" r="120" fill="#4E342E" opacity="0.4"/>
+  <circle cx="100" cy="420" r="90" fill="#4E342E" opacity="0.3"/>
+  <g transform="translate(720, 140)">
+    <ellipse cx="80" cy="130" rx="75" ry="90" fill="#EFEBE9" opacity="0.95"/>
+    <ellipse cx="80" cy="70" rx="55" ry="55" fill="#EFEBE9" opacity="0.95"/>
+    <ellipse cx="35" cy="38" rx="18" ry="22" fill="#EFEBE9" opacity="0.9"/>
+    <ellipse cx="125" cy="38" rx="18" ry="22" fill="#EFEBE9" opacity="0.9"/>
+    <ellipse cx="65" cy="65" rx="18" ry="22" fill="#795548" opacity="0.5"/>
+    <ellipse cx="100" cy="90" rx="14" ry="16" fill="#795548" opacity="0.4"/>
+    <circle cx="62" cy="58" r="6" fill="#3E2723"/>
+    <circle cx="98" cy="58" r="6" fill="#3E2723"/>
+    <circle cx="64" cy="56" r="2" fill="#fff"/>
+    <circle cx="100" cy="56" r="2" fill="#fff"/>
+    <ellipse cx="80" cy="88" rx="20" ry="14" fill="#BCAAA4"/>
+    <circle cx="73" cy="88" r="4" fill="#795548" opacity="0.6"/>
+    <circle cx="87" cy="88" r="4" fill="#795548" opacity="0.6"/>
+    <rect x="38" y="205" width="22" height="35" rx="8" fill="#EFEBE9" opacity="0.9"/>
+    <rect x="100" y="205" width="22" height="35" rx="8" fill="#EFEBE9" opacity="0.9"/>
+    <circle cx="35" cy="38" r="8" fill="#FFCC80"/>
+    <text x="35" y="42" text-anchor="middle" font-size="9" fill="#3E2723" font-weight="700">01</text>
+  </g>
+  <text x="80" y="160" font-family="Arial, sans-serif" font-size="72" font-weight="800" fill="#FFFFFF">Cria Rebanho</text>
+  <text x="80" y="240" font-family="Arial, sans-serif" font-size="72" font-weight="800" fill="#FFCC80">Pro</text>
+  <text x="80" y="300" font-family="Arial, sans-serif" font-size="28" fill="rgba(255,255,255,0.85)">Gestão de rebanho bovino no celular</text>
+  <rect x="80" y="330" width="200" height="44" rx="22" fill="rgba(255,255,255,0.15)"/>
+  <text x="180" y="358" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" font-weight="600">100% Offline</text>
+  <rect x="296" y="330" width="180" height="44" rx="22" fill="rgba(255,255,255,0.15)"/>
+  <text x="386" y="358" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" font-weight="600">9 Módulos</text>
+  <rect x="492" y="330" width="160" height="44" rx="22" fill="rgba(255,204,128,0.25)"/>
+  <text x="572" y="358" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#FFCC80" font-weight="600">Grátis</text>
+  <text x="80" y="440" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.5)">criarebanho.app.br</text>
+</svg>

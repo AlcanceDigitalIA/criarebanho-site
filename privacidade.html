@@ -7,10 +7,23 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="icon" type="image/png" href="img/icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #FAFAF8; color: #1a1a1a; }
+
+    :root {
+      --marrom: #5D4037;
+      --marrom-escuro: #3E2723;
+      --verde: #2E7D32;
+      --laranja: #E65100;
+      --bg: #FAFAF8;
+      --texto: #1a1a1a;
+      --cinza: #666;
+    }
+
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--texto); }
+
+    /* NAV */
     nav {
       position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95);
       backdrop-filter: blur(10px); border-bottom: 1px solid #eee;
@@ -19,104 +32,185 @@
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
-    .nav-logo span { font-weight: 700; font-size: 1.1rem; color: #3E2723; }
+    .nav-logo span { font-weight: 700; font-size: 1.1rem; color: var(--marrom-escuro); }
+    .nav-btn {
+      background: var(--marrom); color: #fff; padding: 10px 20px;
+      border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: var(--marrom-escuro); }
+
+    /* CONTEÚDO */
     .content { max-width: 760px; margin: 0 auto; padding: 120px 5% 80px; }
-    .content h1 { font-size: 2rem; font-weight: 800; color: #3E2723; margin-bottom: 8px; }
+
+    .content h1 { font-size: 2rem; font-weight: 800; color: var(--marrom-escuro); margin-bottom: 8px; }
     .updated { font-size: 0.87rem; color: #888; margin-bottom: 40px; }
-    .content h2 { font-size: 1.15rem; font-weight: 700; color: #3E2723; margin: 32px 0 12px; }
+
+    .content h2 {
+      font-size: 1.1rem; font-weight: 700; color: var(--marrom-escuro);
+      margin: 36px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #eee;
+    }
+
     .content p { font-size: 0.97rem; color: #444; line-height: 1.8; margin-bottom: 12px; }
+
     .content ul { padding-left: 20px; margin-bottom: 12px; }
     .content ul li { font-size: 0.97rem; color: #444; line-height: 1.8; margin-bottom: 6px; }
+
     .highlight {
       background: #FFF8E1; border-left: 4px solid #F9A825;
       padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0;
     }
-    .highlight p { margin: 0; font-weight: 500; }
-    footer { background: #3E2723; color: rgba(255,255,255,0.6); text-align: center; padding: 28px 5%; font-size: 0.87rem; }
+    .highlight p { margin: 0; font-weight: 500; color: #444; }
+
+    .security-box {
+      background: #E8F5E9; border-left: 4px solid var(--verde);
+      padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0;
+    }
+    .security-box p { margin: 0; color: #2E7D32; font-weight: 500; }
+
+    .content a { color: var(--marrom); font-weight: 600; text-decoration: none; }
+    .content a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      background: var(--marrom-escuro); color: rgba(255,255,255,0.6);
+      text-align: center; padding: 32px 5%; font-size: 0.87rem;
+    }
     footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 16px; flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .content h1 { font-size: 1.6rem; }
+    }
   </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="img/icon.png" alt="Cria Rebanho Pro">
     <span>Cria Rebanho Pro</span>
   </a>
+  <a href="index.html" class="nav-btn">← Voltar ao site</a>
 </nav>
 
 <div class="content">
   <h1>Política de Privacidade</h1>
-  <p class="updated">Última atualização: 17 de junho de 2026</p>
+  <p class="updated">Última atualização: 26 de junho de 2026</p>
 
   <div class="highlight">
-    <p>Resumo: O Cria Rebanho Pro armazena seus dados principalmente no seu próprio celular. Coletamos apenas o mínimo necessário para o funcionamento do app e nunca vendemos seus dados.</p>
+    <p>Resumo: O Cria Rebanho Pro armazena seus dados principalmente no seu próprio celular. Coletamos apenas o mínimo necessário para o funcionamento do app, seus dados são isolados por conta e nunca vendemos suas informações.</p>
   </div>
 
   <h2>1. Quem somos</h2>
   <p>O <strong>Cria Rebanho Pro</strong> é um aplicativo de gestão de rebanho bovino desenvolvido por Anderson Lopes de Oliveira, disponível para dispositivos Android. Para dúvidas, entre em contato pelo e-mail <a href="mailto:contato@criarebanho.app.br">contato@criarebanho.app.br</a>.</p>
 
-  <h2>2. Quais dados coletamos</h2>
-  <p>O aplicativo pode coletar e armazenar os seguintes dados:</p>
+  <h2>2. Dados que coletamos</h2>
+  <p>Coletamos apenas os dados necessários para o funcionamento do aplicativo:</p>
+
+  <p><strong>Dados de cadastro e autenticação:</strong></p>
   <ul>
-    <li><strong>Dados de cadastro:</strong> endereço de e-mail e senha, utilizados para criar sua conta e permitir o login.</li>
-    <li><strong>Dados da fazenda:</strong> nome da propriedade, município, estado e telefone de contato — preenchidos pelo próprio usuário nas configurações.</li>
-    <li><strong>Dados do rebanho:</strong> informações sobre animais, eventos sanitários, pesagens, reprodução, piquetes e lançamentos financeiros — todos inseridos pelo usuário.</li>
-    <li><strong>Dados de uso do plano:</strong> identificação do plano (gratuito ou premium) e validade da assinatura.</li>
+    <li><strong>E-mail:</strong> usado para login, confirmação de conta e suporte ao usuário.</li>
+    <li><strong>Senha:</strong> armazenada de forma criptografada — nunca temos acesso à senha original.</li>
   </ul>
 
-  <h2>3. Como os dados são armazenados</h2>
-  <p>Os dados são armazenados de duas formas:</p>
+  <p><strong>Dados da fazenda e do rebanho inseridos pelo usuário:</strong></p>
   <ul>
-    <li><strong>Localmente no dispositivo:</strong> todos os dados são salvos no próprio celular do usuário usando banco de dados SQLite. O app funciona completamente offline.</li>
-    <li><strong>Na nuvem (Supabase):</strong> quando há conexão com a internet, os dados são sincronizados com nosso servidor na nuvem para backup e acesso em múltiplos dispositivos. Os dados são transmitidos com criptografia (HTTPS).</li>
+    <li>Cadastro de animais: brinco, nome, raça, sexo, data de nascimento, peso, pai, mãe, lote e situação</li>
+    <li>Eventos sanitários: vacinações, vermifugações, tratamentos e exames</li>
+    <li>Pesagens e histórico de evolução de peso</li>
+    <li>Piquetes, pastagens e rotação de áreas</li>
+    <li>Eventos reprodutivos: coberturas, gestações e partos</li>
+    <li>Lançamentos financeiros: receitas e despesas da propriedade</li>
+    <li>Contratos de arrendamento de terra</li>
+    <li>Transações de compra e venda de animais</li>
   </ul>
+
+  <p><strong>Não coletamos:</strong> localização geográfica, contatos do celular, fotos ou arquivos do dispositivo, dados de telemetria, nem informações de pagamento (o plano Premium é ativado por código, sem cobrança dentro do app).</p>
+
+  <h2>3. Como os dados são armazenados</h2>
+
+  <p><strong>Armazenamento local (no próprio celular):</strong> todos os dados são salvos no dispositivo usando banco de dados SQLite. O aplicativo funciona 100% offline — você pode cadastrar animais, registrar eventos e consultar informações sem nenhuma conexão com a internet.</p>
+
+  <p><strong>Sincronização com a nuvem (Supabase):</strong> quando há conexão com a internet, os dados são sincronizados automaticamente com servidores seguros fornecidos pelo <strong>Supabase</strong>. Isso permite que seus dados sejam preservados caso troque de celular ou reinstale o aplicativo. Toda comunicação é transmitida com criptografia (HTTPS/TLS).</p>
+
+  <div class="security-box">
+    <p>🔒 Isolamento de dados: cada usuário acessa exclusivamente seus próprios dados. O sistema aplica filtros por identificador único (UUID) tanto nas consultas locais quanto nas consultas em nuvem — nenhum usuário pode visualizar dados de outro.</p>
+  </div>
+
+  <div class="security-box">
+    <p>🛡️ Row Level Security (RLS): todas as tabelas no banco de dados em nuvem possuem RLS ativado — uma política de segurança no nível do banco que garante, por regra, que cada usuário leia e grave apenas seus próprios registros, mesmo que ocorra qualquer falha na aplicação.</p>
+  </div>
 
   <h2>4. Para que usamos os dados</h2>
   <ul>
     <li>Permitir o funcionamento do aplicativo e o acesso à sua conta</li>
-    <li>Sincronizar seus dados entre dispositivos</li>
+    <li>Sincronizar e restaurar seus dados entre dispositivos</li>
     <li>Fazer backup seguro das suas informações na nuvem</li>
-    <li>Verificar o status do plano Premium</li>
-    <li>Enviar alertas e notificações de eventos cadastrados pelo usuário</li>
+    <li>Enviar alertas e notificações de eventos cadastrados pelo próprio usuário</li>
+    <li>Prestar suporte ao usuário quando solicitado, utilizando o e-mail cadastrado</li>
   </ul>
+  <p>Não utilizamos seus dados para fins publicitários, análise de mercado, nem os compartilhamos com terceiros para qualquer finalidade comercial.</p>
 
   <h2>5. Compartilhamento de dados</h2>
-  <p>Não vendemos, alugamos nem compartilhamos seus dados pessoais com terceiros para fins comerciais. Os dados podem ser compartilhados apenas com:</p>
+  <p><strong>Não vendemos, alugamos nem compartilhamos seus dados pessoais com terceiros.</strong></p>
+  <p>O único terceiro que processa seus dados é:</p>
   <ul>
-    <li><strong>Supabase:</strong> provedor de banco de dados na nuvem, utilizado exclusivamente para armazenamento e sincronização dos dados do app.</li>
+    <li><strong>Supabase Inc.</strong> — provedor de banco de dados em nuvem, responsável pela infraestrutura de armazenamento e autenticação. Consulte a política de privacidade do Supabase em <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</li>
   </ul>
 
   <h2>6. Notificações</h2>
   <p>O aplicativo pode enviar notificações locais para lembretes de eventos sanitários, partos previstos e piquetes a vencer, com base nos dados que você mesmo cadastrou. Você pode desativar as notificações a qualquer momento nas configurações do seu celular.</p>
 
-  <h2>7. Seus direitos</h2>
-  <p>Você tem o direito de:</p>
+  <h2>7. Confirmação de e-mail e autenticação</h2>
+  <p>Ao criar uma conta, você receberá um e-mail de confirmação com um link seguro. Ao clicar nesse link, você é redirecionado de volta ao aplicativo automaticamente por meio de um protocolo seguro (PKCE). Esse processo garante que a confirmação ocorra dentro do próprio app, sem expor credenciais.</p>
+
+  <h2>8. Retenção dos dados</h2>
+  <p>Seus dados são mantidos enquanto sua conta estiver ativa. Ao solicitar a exclusão da conta, os dados em nuvem são removidos permanentemente. Os dados locais no dispositivo podem ser excluídos desinstalando o aplicativo.</p>
+
+  <h2>9. Seus direitos (LGPD)</h2>
+  <p>Em conformidade com a <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</strong>, você tem direito a:</p>
   <ul>
-    <li>Acessar todos os dados que cadastrou no aplicativo</li>
-    <li>Corrigir ou atualizar seus dados a qualquer momento</li>
-    <li>Excluir sua conta e todos os dados associados — basta entrar em contato pelo e-mail abaixo</li>
+    <li>Confirmar se tratamos seus dados pessoais</li>
+    <li>Acessar e corrigir seus dados a qualquer momento dentro do app</li>
+    <li>Solicitar a exclusão da sua conta e de todos os dados associados</li>
     <li>Exportar seus dados em formato PDF através dos relatórios do app</li>
+    <li>Revogar o consentimento a qualquer momento</li>
+  </ul>
+  <p>Para exercer qualquer um desses direitos, entre em contato pelo e-mail <a href="mailto:contato@criarebanho.app.br">contato@criarebanho.app.br</a>.</p>
+
+  <h2>10. Segurança</h2>
+  <p>Medidas técnicas adotadas para proteger seus dados:</p>
+  <ul>
+    <li>Autenticação com e-mail e senha criptografada (bcrypt)</li>
+    <li>Confirmação de e-mail com fluxo PKCE para prevenir interceptação</li>
+    <li>Comunicação com a nuvem via HTTPS/TLS</li>
+    <li>Row Level Security (RLS) ativado em todas as tabelas do banco de dados</li>
+    <li>Isolamento de dados por identificador único de usuário (UUID) em todas as consultas</li>
   </ul>
 
-  <h2>8. Segurança</h2>
-  <p>Adotamos medidas técnicas para proteger seus dados, incluindo transmissão criptografada (HTTPS/TLS) e autenticação segura. Recomendamos que você utilize uma senha forte e não compartilhe suas credenciais de acesso.</p>
+  <h2>11. Menores de idade</h2>
+  <p>O Cria Rebanho Pro é destinado a produtores rurais e gestores de propriedades. Não coletamos intencionalmente dados de menores de 13 anos. Caso identifique um cadastro indevido, entre em contato para que possamos removê-lo.</p>
 
-  <h2>9. Crianças</h2>
-  <p>O Cria Rebanho Pro não é destinado a menores de 18 anos e não coleta intencionalmente dados de crianças ou adolescentes.</p>
+  <h2>12. Alterações nesta política</h2>
+  <p>Podemos atualizar esta Política de Privacidade periodicamente. Quando houver alterações relevantes, notificaremos os usuários pelo próprio aplicativo ou por e-mail. O uso contínuo do app após as alterações implica na aceitação da nova política.</p>
 
-  <h2>10. Alterações nesta política</h2>
-  <p>Podemos atualizar esta Política de Privacidade periodicamente. Quando houver alterações relevantes, notificaremos os usuários pelo próprio aplicativo. O uso contínuo do app após as alterações implica na aceitação da nova política.</p>
-
-  <h2>11. Contato</h2>
-  <p>Para dúvidas, solicitações ou exclusão de dados, entre em contato:</p>
+  <h2>13. Contato</h2>
+  <p>Dúvidas, solicitações ou exclusão de dados:</p>
   <p><strong>E-mail:</strong> <a href="mailto:contato@criarebanho.app.br">contato@criarebanho.app.br</a></p>
   <p><strong>WhatsApp:</strong> <a href="https://wa.me/5569999224713">(69) 99922-4713</a></p>
   <p><strong>Site:</strong> <a href="https://criarebanho.app.br">criarebanho.app.br</a></p>
 </div>
 
+<!-- FOOTER -->
 <footer>
-  <p>© 2026 Cria Rebanho Pro — <a href="index.html">Voltar ao site</a></p>
+  <div class="footer-links">
+    <a href="privacidade.html">Política de Privacidade</a>
+    <a href="mailto:contato@criarebanho.app.br">contato@criarebanho.app.br</a>
+  </div>
+  <p>© 2026 Cria Rebanho Pro. Desenvolvido com ❤️ para o pecuarista brasileiro.</p>
 </footer>
 
 </body>
