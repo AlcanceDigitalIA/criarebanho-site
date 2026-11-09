@@ -641,6 +641,7 @@
 <footer>
   <div class="footer-links">
     <a href="privacidade.html">Política de Privacidade</a>
+    <a href="excluir-conta.html">Excluir conta</a>
     <a href="mailto:contato@criarebanho.app.br">contato@criarebanho.app.br</a>
     <a href="https://wa.me/5569999224713" target="_blank" rel="noopener">WhatsApp</a>
   </div>
